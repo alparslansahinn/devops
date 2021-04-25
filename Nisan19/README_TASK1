@@ -1,0 +1,30 @@
+TASK1
+
+********Created Centos7 machine**************
+
+
+1- adduser alparslansahin
+2- passwd username
+3- sudo vi /etc/sudoers
+
+root    ALL=(ALL:ALL) ALL
+alparslansahin ALL=(ALL:ALL) ALL
+
+4- fdisk /dev/sda1
+5- mke2fs -j /dev/sda1
+6- mkdir /opt/bootcamp
+7-chmod 775 /opt/bootcamp/
+8-mount /dev/sda1 /opt/bootcamp/
+9-cd /opt/bootcamp/
+10- nano bootcamp.txt
+
+echo "merhaba trendyol"
+
+11-cd /home/alparslansahin
+12- sudo find /opt/bootcamp/ -name '*bootcamp.txt*' -exec mv -t /mnt/bootcamp/ {} +
+
+
+
+TASK2
+
+

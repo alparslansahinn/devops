@@ -1,0 +1,130 @@
+1- sudo python get-pip.py
+2- sudo python -m pip install ansible
+3- ansible --version
+
+   ansible 2.10.8
+
+4- mkdir ansible
+5- nano ansible.cfg
+
+# https://docs.ansible.com/ansible/2.9/reference_appendices/config.html#the-configuration-file
+
+[defaults]
+remote_user = root
+retry_files_enabled = false
+forks = 5
+roles_path = roles
+transport = smart
+inventory = ./hosts
+interpreter_python = /usr/bin/python3
+
+[privilege_escalation]
+become = false
+become_method = sudo
+become_user = root
+become_ask_pass = false
+
+[ssh_connection]
+pipelining = True
+timeout = 10
+
+6- nano hosts
+
+192.168.1.107
+127.0.0.1
+# [control]
+# control ansible_connection=local
+
+7- nano docker-centos.yml
+
+- hosts: 192.168.1.107
+  tasks:
+    - name: install using repository
+      command: yum install -y yum-utils	
+    - name: Add Docker repo1
+      command: yum-config-manager \
+               --add-repo \
+               https://download.docker.com/linux/centos/docker-ce.repo	
+    - name: install yum install docker-ce docker-ce-cli containerd.io 
+      command: yum install docker-ce docker-ce-cli containerd.io -y
+    - name: download repository 
+      command: yum install docker-ce-docker-ce.x86_64 docker-ce-cli-docker-ce.x86_64 containerd.io	  	
+    - name: start docker service
+      command: systemctl start docker
+
+8- ansible-playbook docker-centos.yml
+
+########Download docker for centos machine##################
+
+9- nano install-nginx.yml
+
+- hosts: 192.168.1.113
+  tasks:
+    - name: apt update
+      command: yum install epel-release	
+    - name: ensure nginx is at the latest version
+      command: yum install nginx -y
+#    - name: ensure nginx is at the latest version
+#      command: sudo yum –y install nginx
+    - name: start nginx
+      service:
+          name: nginx
+          state: started
+
+9- ansible-playbook install-nginx.yml
+
+#########Download nginx for centos machine#################
+
+
+10- nano docker-run.yml
+
+- hosts: 192.168.1.107
+  tasks:
+    - name: docker build
+      command: docker build -t example:images /home/alp/test	
+    - name: docker run command
+      command: docker run -itd example:images
+
+########Dockerize edilen uygulamayı dosyadan çıktıktan sonra bu directory içerisinde görebilirsiniz#########
+
+11- ansible-playbook docker-run.yml
+
+#########Created docker image and was run#############
+
+12- nano inventory.cfg
+
+[all]
+192.168.1.107
+127.0.0.1
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+
+10-  nano /var/www/html/index.nginx-debian.html
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hosgeldin devops</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Hosgeldin devops</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
