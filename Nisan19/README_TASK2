@@ -58,7 +58,7 @@ timeout = 10
 
 9- nano install-nginx.yml
 
-- hosts: 192.168.1.113
+- hosts: 192.168.1.107
   tasks:
     - name: apt update
       command: yum install epel-release	
