@@ -85,7 +85,7 @@ timeout = 10
     - name: docker run command
       command: docker run -itd example:images
 
-########Dockerize edilen uygulamayı dosyadan çıktıktan sonra bu directory içerisinde görebilirsiniz#########
+########Dockerize edilen uygulamayı dosyadan çıktıktan sonra test directory içerisinde görebilirsiniz#########
 
 11- ansible-playbook docker-run.yml
 
