@@ -6,7 +6,7 @@
 #      command: rm -rf /home/alp/ alp.txt
 #      register: reboot
 
-- hosts: 192.168.1.113
+- hosts: 192.168.1.105
   tasks:
     - name: apt update
       command: yum install epel-release	
