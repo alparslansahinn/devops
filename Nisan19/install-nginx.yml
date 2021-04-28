@@ -1,0 +1,20 @@
+#- hosts: 192.168.1.113
+  #vars_files:
+    #- bos
+#  tasks:
+#    - name: reboot
+#      command: rm -rf /home/alp/ alp.txt
+#      register: reboot
+
+- hosts: 192.168.1.113
+  tasks:
+    - name: apt update
+      command: yum install epel-release	
+    - name: ensure nginx is at the latest version
+      command: yum install nginx -y
+#    - name: ensure nginx is at the latest version
+#      command: sudo yum –y install nginx
+    - name: start nginx
+      service:
+          name: nginx
+          state: started

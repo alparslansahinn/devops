@@ -1,0 +1,20 @@
+#- hosts: 192.168.1.113
+  #vars_files:
+    #- bos
+#  tasks:
+#    - name: reboot
+#      command: rm -rf /home/alp/ alp.txt
+#      register: reboot
+
+- hosts: 127.0.0.1
+  tasks:
+    - name: apt update
+      command: apt update	
+    - name: ensure nginx is at the latest version
+      command: apt install nginx -y
+#    - name: ensure nginx is at the latest version
+#      command: sudo yum –y install nginx
+    - name: start nginx
+      service:
+          name: nginx
+          state: started

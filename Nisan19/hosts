@@ -1,0 +1,5 @@
+192.168.1.105
+127.0.0.1
+# [control]
+# control ansible_connection=local
+
